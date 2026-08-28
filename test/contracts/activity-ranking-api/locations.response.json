@@ -1,0 +1,14 @@
+{
+  "query": "cape",
+  "results": [
+    {
+      "id": 3369157,
+      "name": "Cape Town",
+      "country": "South Africa",
+      "admin1": "Western Cape",
+      "latitude": -33.92584,
+      "longitude": 18.42322,
+      "timezone": "Africa/Johannesburg"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "location": {
+    "latitude": -33.9258,
+    "longitude": 18.4232,
+    "timezone": "Africa/Johannesburg"
+  },
+  "days": [
+    {
+      "date": "2026-08-28",
+      "topActivity": "OutdoorSightseeing",
+      "activities": [
+        {
+          "activity": "Skiing",
+          "score": 5,
+          "rating": "Poor",
+          "reasoning": "No snowfall and temperatures well above freezing."
+        },
+        {
+          "activity": "Surfing",
+          "score": 55,
+          "rating": "Good",
+          "reasoning": "Moderate winds with a mild 17°C."
+        },
+        {
+          "activity": "OutdoorSightseeing",
+          "score": 80,
+          "rating": "Excellent",
+          "reasoning": "Clear skies, good visibility and 22°C."
+        },
+        {
+          "activity": "IndoorSightseeing",
+          "score": 40,
+          "rating": "Fair",
+          "reasoning": "Pleasant outdoor weather makes indoor options less compelling."
+        }
+      ]
+    }
+  ]
+}

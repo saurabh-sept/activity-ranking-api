@@ -1,0 +1,9 @@
+node_modules/
+.env
+*.log
+
+# Cucumber / test report artefacts (if a formatter is configured)
+reports/
+cucumber-report.html
+cucumber-report.json
+cucumber_report.*

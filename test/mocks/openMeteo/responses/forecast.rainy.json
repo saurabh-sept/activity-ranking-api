@@ -1,0 +1,29 @@
+{
+  "latitude": 51.5,
+  "longitude": -0.12,
+  "timezone": "GMT",
+  "hourly_units": {
+    "time": "unixtime",
+    "temperature_2m": "°C",
+    "snowfall": "cm",
+    "cloud_cover": "%",
+    "wind_speed_10m": "km/h",
+    "visibility": "m",
+    "precipitation": "mm"
+  },
+  "hourly": {
+    "time": [1787875200, 1787886000],
+    "temperature_2m": [9.0, 8.0],
+    "snowfall": [0.0, 0.0],
+    "cloud_cover": [100, 100],
+    "wind_speed_10m": [15.0, 18.0],
+    "visibility": [800.0, 600.0],
+    "precipitation": [5.0, 6.5]
+  },
+  "daily_units": { "time": "unixtime", "uv_index_max": "", "precipitation_hours": "h" },
+  "daily": {
+    "time": [1787875200, 1787961600],
+    "uv_index_max": [1.5, 1.2],
+    "precipitation_hours": [18.0, 20.0]
+  }
+}

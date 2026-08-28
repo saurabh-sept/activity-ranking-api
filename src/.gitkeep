@@ -1,0 +1,2 @@
+# Reserved for the future Activity Ranking API implementation (the system under test).
+# It is intentionally empty: this is a spec-first suite, so no SUT exists yet and the API tests stay RED.

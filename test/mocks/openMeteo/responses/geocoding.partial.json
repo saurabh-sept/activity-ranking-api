@@ -1,0 +1,32 @@
+{
+  "results": [
+    {
+      "id": 3369157,
+      "name": "Cape Town",
+      "latitude": -33.92584,
+      "longitude": 18.42322,
+      "country": "South Africa",
+      "admin1": "Western Cape",
+      "timezone": "Africa/Johannesburg"
+    },
+    {
+      "id": 2302357,
+      "name": "Cape Coast",
+      "latitude": 5.10535,
+      "longitude": -1.2466,
+      "country": "Ghana",
+      "admin1": "Central Region",
+      "timezone": "Africa/Accra"
+    },
+    {
+      "id": 4149962,
+      "name": "Cape Coral",
+      "latitude": 26.56285,
+      "longitude": -81.94953,
+      "country": "United States",
+      "admin1": "Florida",
+      "timezone": "America/New_York"
+    }
+  ],
+  "generationtime_ms": 0.5
+}
