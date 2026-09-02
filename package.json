@@ -4,26 +4,29 @@
   "description": "Spec-first BDD API automation for the Activity Ranking API (city-based 7-day weather activity ranking).",
   "type": "module",
   "scripts": {
-    "test": "npm run test:bdd",
-    "test:bdd": "tsx node_modules/@cucumber/cucumber/bin/cucumber.js"
+    "test": "npm run typecheck && npm run test:mock && npm run test:bdd",
+    "test:bdd": "tsx node_modules/@cucumber/cucumber/bin/cucumber.js --format progress --format json:reports/cucumber-report.json",
+    "test:mock": "tsx --test test/mocks/openMeteo/server.test.ts",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "cucumber",
     "bdd",
     "gherkin",
     "typescript",
-    "msw",
+    "open-meteo",
     "api-testing",
     "spec-first"
   ],
   "license": "ISC",
-  "dependencies": {
-    "@cucumber/cucumber": "^11.2.0",
-    "msw": "^2.6.5"
+  "engines": {
+    "node": "22 || 24 || >=26"
   },
   "devDependencies": {
-    "@types/node": "^20.11.30",
-    "tsx": "^4.19.2",
-    "typescript": "^5.6.3"
+    "@cucumber/cucumber": "^13.2.1",
+    "@types/node": "^26.4.0",
+    "msw": "^2.15.0",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
   }
 }

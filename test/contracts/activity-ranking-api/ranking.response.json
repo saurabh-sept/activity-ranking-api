@@ -11,24 +11,28 @@
       "activities": [
         {
           "activity": "Skiing",
+          "rank": 4,
           "score": 5,
           "rating": "Poor",
           "reasoning": "No snowfall and temperatures well above freezing."
         },
         {
           "activity": "Surfing",
+          "rank": 2,
           "score": 55,
           "rating": "Good",
           "reasoning": "Moderate winds with a mild 17°C."
         },
         {
           "activity": "OutdoorSightseeing",
+          "rank": 1,
           "score": 80,
           "rating": "Excellent",
           "reasoning": "Clear skies, good visibility and 22°C."
         },
         {
           "activity": "IndoorSightseeing",
+          "rank": 3,
           "score": 40,
           "rating": "Fair",
           "reasoning": "Pleasant outdoor weather makes indoor options less compelling."

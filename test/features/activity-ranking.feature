@@ -4,7 +4,15 @@ Feature: Ranking activities for the week ahead
   So that I can pick the best day and activity for the weather
 
   Background:
-    Given I have chosen a town to plan activities for
+    Given a town using canonical week A weather:
+      | day | conditions |
+      | 1 | heavy snow and freezing temperatures |
+      | 2 | clear skies and mild temperatures |
+      | 3 | strong winds with warm, dry weather |
+      | 4 | persistent rain and poor visibility |
+      | 5 | warm, dry and calm weather |
+      | 6 | cold, overcast weather with limited visibility |
+      | 7 | extreme heat and very high UV |
 
   Scenario: I receive a rating for each of the next seven days
     When I ask how suitable each activity is
@@ -21,27 +29,94 @@ Feature: Ranking activities for the week ahead
     And every score should carry a matching quality rating
 
   Scenario: Heavy snow makes skiing the best choice
-    Given a town where heavy snow and freezing temperatures are forecast
     When I ask how suitable each activity is
-    Then "Skiing" should be the best-rated activity
-    And the reason should mention snow
+    Then day 1 should be best suited to "Skiing"
+    And the reason on day 1 should mention snow
 
   Scenario: Clear, mild weather makes outdoor sightseeing the best choice
-    Given a town where clear skies and mild temperatures are forecast
     When I ask how suitable each activity is
-    Then "Outdoor Sightseeing" should be the best-rated activity
+    Then day 2 should be best suited to "Outdoor Sightseeing"
 
   Scenario: Strong winds with warm, dry weather make surfing the best choice
-    Given a town where strong winds and warm, dry weather are forecast
     When I ask how suitable each activity is
-    Then "Surfing" should be the best-rated activity
+    Then day 3 should be best suited to "Surfing"
 
   Scenario: Persistent rain and poor visibility make indoor sightseeing the best choice
-    Given a town where persistent rain and poor visibility are forecast
     When I ask how suitable each activity is
-    Then "Indoor Sightseeing" should be the best-rated activity
+    Then day 4 should be best suited to "Indoor Sightseeing"
+
+  Scenario: Warm, dry and calm weather is unsuitable for surfing
+    When I ask how suitable each activity is
+    Then "Surfing" should not be the best-rated activity on day 5
+
+  Scenario: Cold overcast weather with limited visibility is unsuitable for outdoor sightseeing
+    When I ask how suitable each activity is
+    Then "Outdoor Sightseeing" should not be the best-rated activity on day 6
+
+  Scenario: Extreme heat and high UV make outdoor sightseeing unsuitable
+    When I ask how suitable each activity is
+    Then "Outdoor Sightseeing" should not be the best-rated activity on day 7
+
+  Scenario: Severe wet and windy weather is unsuitable for surfing and outdoor sightseeing
+    Given a town using canonical week B weather:
+      | day | conditions |
+      | 1 | severe rain, poor visibility and dangerous winds |
+      | 2 | cold, dry weather with no snowfall |
+      | 3 | clear skies and mild temperatures |
+      | 4 | strong winds with warm, dry weather |
+      | 5 | persistent rain and poor visibility |
+      | 6 | heavy snow and freezing temperatures |
+      | 7 | warm, dry and calm weather |
+    When I ask how suitable each activity is
+    Then "Surfing" should not be the best-rated activity on day 1
+    And "Outdoor Sightseeing" should not be the best-rated activity on day 1
 
   Scenario: The weather service being unavailable is reported clearly
     Given the weather service is temporarily unavailable
     When I ask how suitable each activity is
     Then I should be told activity ranking is temporarily unavailable
+
+Scenario: Cold but dry conditions should not favour skiing
+    Given a town using canonical week B weather:
+      | day | conditions |
+      | 1 | severe rain, poor visibility and dangerous winds |
+      | 2 | cold, dry weather with no snowfall |
+      | 3 | clear skies and mild temperatures |
+      | 4 | strong winds with warm, dry weather |
+      | 5 | persistent rain and poor visibility |
+      | 6 | heavy snow and freezing temperatures |
+      | 7 | warm, dry and calm weather |
+    When I ask how suitable each activity is
+    Then "Skiing" should not be the best-rated activity on day 2
+
+Scenario: Pleasant clear dry weather should not favour indoor sightseeing
+    Given a town using canonical week B weather:
+      | day | conditions |
+      | 1 | severe rain, poor visibility and dangerous winds |
+      | 2 | cold, dry weather with no snowfall |
+      | 3 | clear skies and mild temperatures |
+      | 4 | strong winds with warm, dry weather |
+      | 5 | persistent rain and poor visibility |
+      | 6 | heavy snow and freezing temperatures |
+      | 7 | warm, dry and calm weather |
+    When I ask how suitable each activity is
+    Then "Indoor Sightseeing" should not be the best-rated activity on day 3
+
+Scenario: A full week with changing weather conditions
+    Given a town using canonical week B weather:
+      | day | conditions |
+      | 1 | severe rain, poor visibility and dangerous winds |
+      | 2 | cold, dry weather with no snowfall |
+      | 3 | clear skies and mild temperatures |
+      | 4 | strong winds with warm, dry weather |
+      | 5 | persistent rain and poor visibility |
+      | 6 | heavy snow and freezing temperatures |
+      | 7 | warm, dry and calm weather |
+    When I ask how suitable each activity is
+    Then day 1 should be best suited to "Indoor Sightseeing"
+    And day 2 should be best suited to "Indoor Sightseeing"
+    And day 3 should be best suited to "Outdoor Sightseeing"
+    And day 4 should be best suited to "Surfing"
+    And day 5 should be best suited to "Indoor Sightseeing"
+    And day 6 should be best suited to "Skiing"
+    And day 7 should be best suited to "Outdoor Sightseeing"

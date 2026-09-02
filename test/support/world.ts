@@ -1,6 +1,6 @@
 import { World, setWorldConstructor } from '@cucumber/cucumber';
-import { config } from './config';
-import type { Coordinates } from './weatherLocations';
+import { config } from './config.js';
+import type { Coordinates } from './weatherLocations.js';
 
 export interface ApiResponse {
   status: number;

@@ -7,6 +7,9 @@ export function assertMatchesContract(actual: unknown, golden: unknown, path = '
     }
     const template = golden[0];
     if (template !== undefined) {
+      if (actual.length === 0) {
+        throw new Error(`${path}: expected a non-empty array`);
+      }
       actual.forEach((item, i) => assertMatchesContract(item, template, `${path}[${i}]`));
     }
     return;

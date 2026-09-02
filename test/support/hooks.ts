@@ -1,15 +1,14 @@
-import { BeforeAll, AfterAll, After } from '@cucumber/cucumber';
-import { openMeteoServer } from '../mocks/openMeteo/server';
+import { BeforeAll, AfterAll } from '@cucumber/cucumber';
+import { startSut, stopSut } from '../../src/server.js';
+import { openMeteoServer } from '../mocks/openMeteo/server.js';
 
-// MSW intercepts Open-Meteo only. SUT calls (localhost) are bypassed, so they fail while the SUT is absent.
-BeforeAll(function () {
+let sut: Awaited<ReturnType<typeof startSut>>;
+BeforeAll(async function () {
   openMeteoServer.listen({ onUnhandledRequest: 'bypass' });
+  sut = await startSut();
 });
 
-After(function () {
-  openMeteoServer.resetHandlers();
-});
-
-AfterAll(function () {
+AfterAll(async function () {
+  await stopSut(sut);
   openMeteoServer.close();
 });

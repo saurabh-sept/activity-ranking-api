@@ -1,4 +1,4 @@
-import type { ApiResponse } from './world';
+import type { ApiResponse } from './world.js';
 
 // Native fetch call to the SUT. Parsing is defensive because the SUT does not exist yet.
 export async function getJson(url: string): Promise<ApiResponse> {

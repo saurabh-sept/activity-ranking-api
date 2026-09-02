@@ -1,0 +1,17 @@
+{
+  "latitude": 46.9,
+  "longitude": 8.9,
+  "timezone": "GMT",
+  "hourly": {
+    "temperature_2m": [0.0, 0.0, 0.0],
+    "rain": [0.0, 0.0, 0.0],
+    "showers": [0.0, 0.0, 0.0],
+    "snowfall": [1.0, 1.0, 1.0],
+    "cloud_cover": [60, 60, 60],
+    "wind_speed_10m": [10.0, 10.0, 10.0],
+    "visibility": [10000.0, 10000.0, 10000.0]
+  },
+  "daily": {
+    "uv_index_max": [1, 1, 1, 1, 1, 1, 1]
+  }
+}

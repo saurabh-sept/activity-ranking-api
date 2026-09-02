@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import type { ActivityRankingWorld } from './world';
+import type { ActivityRankingWorld } from './world.js';
 
 // Shared guard: fails with a clear RED message when the absent SUT returned nothing.
 export function assertStatus(world: ActivityRankingWorld, expected: number): void {

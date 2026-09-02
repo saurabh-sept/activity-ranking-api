@@ -1,5 +1,5 @@
 // Single source of truth for service URLs, read from env with production defaults.
-// The future SUT calls these Open-Meteo URLs for real; in tests MSW intercepts the same URLs in-process.
+// Cucumber points at the in-process SUT; MSW intercepts its Open-Meteo calls.
 export const config = {
   sutBaseUrl: process.env.SUT_BASE_URL ?? 'http://localhost:3000',
   openMeteo: {

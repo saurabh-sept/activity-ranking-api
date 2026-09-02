@@ -2,10 +2,10 @@ import { When, Then } from '@cucumber/cucumber';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { getJson } from '../support/httpClient';
-import { assertMatchesContract } from '../support/contract';
-import { assertStatus, assertHasError } from '../support/responseAssertions';
-import type { ActivityRankingWorld } from '../support/world';
+import { getJson } from '../support/httpClient.js';
+import { assertMatchesContract } from '../support/contract.js';
+import { assertStatus, assertHasError } from '../support/responseAssertions.js';
+import type { ActivityRankingWorld } from '../support/world.js';
 
 const locationsContract = JSON.parse(
   readFileSync(
