@@ -291,3 +291,12 @@ Then('I should be told activity ranking is temporarily unavailable', function (t
   assertStatus(this, 502);
   assertHasError(this);
 });
+
+Then('each day should rank the four activities from 1 to 4, best to worst', function (this: ActivityRankingWorld) {
+  // Explicit spec-level guarantee, asserted per day: every one of the seven days occupies
+  // ranks 1-4 exactly once, scores are non-increasing by rank, and rank 1 is the topActivity.
+  // (assertRankingResponse enforces the same contract on every ranking scenario.)
+  for (const day of assertRankingResponse(this)) {
+    assertCompleteRanks(day);
+  }
+});

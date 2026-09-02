@@ -186,7 +186,7 @@ The pipeline runs TypeScript validation, direct MSW handler tests, and the full 
 Feature files are **declarative and user-behaviour style** — no coordinates or search strings leak into scenarios. Ranking features declare the complete seven-day weather composition in Gherkin tables, which the step definitions validate against the canonical fixtures (so the spec documents the mock data rather than silently selecting it).
 
 - **`location-search.feature`** — search by part of a name → several matches (each complete enough to choose) · exact name → single match · unknown name → no matches · missing name → rejected · blank spaces → rejected.
-- **`activity-ranking.feature`** — 7-day ranking · every day rates all four activities with a reason · scores on a 0–100 scale with a matching rating band · heavy snow → skiing best · clear & mild → outdoor sightseeing · strong winds, warm & dry → surfing · persistent rain & poor visibility → indoor sightseeing · weather service unavailable → reported clearly.
+- **`activity-ranking.feature`** — 7-day ranking · every day rates all four activities with a reason · **every day ranks the four activities 1 (best) to 4 (worst)** · scores on a 0–100 scale with a matching rating band · heavy snow → skiing best · clear & mild → outdoor sightseeing · strong winds, warm & dry → surfing · persistent rain & poor visibility → indoor sightseeing · weather service unavailable → reported clearly.
 - **`activity-ranking-boundaries.feature`** — paired below/exact/above thresholds for wind, freezing temperature with snow, rainfall and visibility (see the boundary table above).
 
 ### Scenario-to-mock mapping

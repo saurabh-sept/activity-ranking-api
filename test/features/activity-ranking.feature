@@ -23,6 +23,10 @@ Feature: Ranking activities for the week ahead
     Then each day should rate skiing, surfing, outdoor sightseeing and indoor sightseeing
     And each rating should explain how suitable the day is and why
 
+  Scenario: Every day ranks the four activities from best to worst
+    When I ask how suitable each activity is
+    Then each day should rank the four activities from 1 to 4, best to worst
+
   Scenario: Suitability is shown on a clear and consistent scale
     When I ask how suitable each activity is
     Then every suitability score should be on a 0 to 100 scale
@@ -120,3 +124,4 @@ Scenario: A full week with changing weather conditions
     And day 5 should be best suited to "Indoor Sightseeing"
     And day 6 should be best suited to "Skiing"
     And day 7 should be best suited to "Outdoor Sightseeing"
+    And each day should rank the four activities from 1 to 4, best to worst

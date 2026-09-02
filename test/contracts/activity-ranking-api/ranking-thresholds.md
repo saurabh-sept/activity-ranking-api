@@ -33,6 +33,10 @@ Rank semantics:
   and score ordering, not a specific tie-break. (The test helpers treat the first activity of a
   tie as best when deriving from scores alone.)
 
+The rank contract is asserted explicitly, per day, by the *Every day ranks the four activities
+from best to worst* scenario, and is enforced on every ranking response by the shared response
+assertion.
+
 ---
 
 ## 2. Per-activity score drivers (dominant weather factor)
