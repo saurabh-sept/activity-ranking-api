@@ -96,10 +96,14 @@ Boundary fixtures: `forecast.boundary-rain-low.json` (`4.9 mm/h`),
 
 ## 3. Daylight (sunrise/sunset) relation
 
-The SUT requests daily `sunrise`/`sunset` alongside the hourly variables and **may** use the
-daylight window when scoring outdoor activities (e.g. reducing outdoor-sightseeing suitability on
-short days). No daylight-threshold scenario exists yet — the rule is intentionally unpinned until
-a product decision is made — but the data the SUT needs is deterministic:
+The daily `sunrise`/`sunset` values are how the SUT makes use of the hourly data: they define the
+**daylight window** for each day, and the SUT is expected to use that window to work out which
+hourly samples apply when scoring — e.g. aggregating temperature, wind, rain and visibility over
+the daylight hours for the outdoor activities, and over the full day (or the night hours) where a
+rule calls for it. The window may also modulate the score itself (e.g. reducing
+outdoor-sightseeing suitability on short days). No daylight-threshold scenario exists yet — the
+scoring rule is intentionally unpinned until a product decision is made — but the window-to-hourly
+data relation the SUT relies on is deterministic:
 
 - A fixture profile may declare `daylight: { "sunriseHour", "sunsetHour" }` (whole hours,
   `0 ≤ sunrise < sunset ≤ 23`). It defaults to `06:00–18:00` (a deterministic 12-hour day).
@@ -115,9 +119,34 @@ hourly ranges follow automatically and stay consistent with the reported sunrise
 
 ## 4. Data relations the mock guarantees (mirroring real Open-Meteo)
 
-The served forecast has **exactly** the real Open-Meteo response structure for the request
-`daily=uv_index_max,precipitation_hours,sunrise,sunset&hourly=temperature_2m,rain,showers,snowfall,wind_speed_10m,visibility,cloud_cover&format=json&timeformat=unixtime`
-— no extra or missing fields at any level:
+### 4.1 Response payload assumption
+
+The SUT requests the forecast with the fixed query:
+
+```
+https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}
+  &daily=uv_index_max,precipitation_hours,sunrise,sunset
+  &hourly=temperature_2m,rain,showers,snowfall,wind_speed_10m,visibility,cloud_cover
+  &format=json&timeformat=unixtime
+```
+
+**Assumption:** for this request, the Open-Meteo response payload contains **only** the following
+properties — and the SUT must not depend on anything else:
+
+- **Top level:** `latitude`, `longitude`, `generationtime_ms`, `utc_offset_seconds`, `timezone`,
+  `timezone_abbreviation`, `elevation`, `hourly_units`, `hourly`, `daily_units`, `daily`.
+- **`hourly_units` / `hourly`:** `time` plus exactly the seven requested variables
+  (`temperature_2m`, `rain`, `showers`, `snowfall`, `wind_speed_10m`, `visibility`,
+  `cloud_cover`).
+- **`daily_units` / `daily`:** `time` plus exactly the four requested values
+  (`uv_index_max`, `precipitation_hours`, `sunrise`, `sunset`).
+
+No other variables (e.g. `apparent_temperature`, `weather_code`, `is_day`, `precipitation`) are
+expected in the payload. If a future implementation needs a variable outside this list, the
+request above, this assumption and the mock fixtures must be updated together. The mock serves
+exactly this structure, and the direct MSW tests enforce the key sets so a drift fails loudly.
+
+### 4.2 Guaranteed relations
 
 | Relation | Guarantee |
 | --- | --- |

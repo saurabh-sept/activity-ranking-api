@@ -52,7 +52,7 @@ activity-ranking-api/
 │   ├── stepDefinitions/      # DELIVERABLE 2 — automation glue
 │   ├── support/              # world, config, httpClient, contract/response assertions, hooks, weatherLocations
 │   ├── mocks/openMeteo/      # MSW server + canned responses + fixture expansion
-│   └── contracts/            # golden SUT response shapes (locations + ranking)
+│   └── contracts/            # golden SUT response shapes + ranking-thresholds.md (scoring contract)
 ├── cucumber.mjs              # Cucumber config
 └── .env.example              # SUT + Open-Meteo URL template
 ```
@@ -118,7 +118,7 @@ The **suitability measure** is a `rank` (1–4, best to worst), a `score` (0–1
 
 ### How the tests consume the contract
 
-The two `contracts/activity-ranking-api/*.response.json` files are **golden shapes**. Step definitions load them and call `assertMatchesContract(actualResponse, golden)`, which checks **keys and leaf types only** (values are never compared, since live weather varies). The contract sample defines the fields checked by the shape validator; behavioral assumptions are enforced by the scenarios.
+The two `contracts/activity-ranking-api/*.response.json` files are **golden shapes**. Step definitions load them and call `assertMatchesContract(actualResponse, golden)`, which checks **keys and leaf types only** (values are never compared, since live weather varies). The contract sample defines the fields checked by the shape validator; behavioral assumptions are enforced by the scenarios. The behavioural half of the contract — score/rating bands, `rank` 1–4 semantics, per-activity thresholds, the Open-Meteo payload assumption and the sunrise/sunset → hourly-window relation — is specified in [`ranking-thresholds.md`](test/contracts/activity-ranking-api/ranking-thresholds.md).
 ---
 
 ## Open-Meteo dependency & mocking strategy
@@ -221,7 +221,7 @@ Every response fixture under `test/mocks/openMeteo/responses/` is used by at lea
 - **Forecast fixture routing.** Registered coordinates must resolve to a fixture; unknown forecast coordinates return `404` from the mock. Mock day 1 maps to ranking day 1.
 - **Validation errors** return `400`; an Open-Meteo outage returns `502`; error bodies carry an `error` field.
 - **Timestamps.** Open-Meteo is requested with `timeformat=unixtime`; converting to ISO dates is the SUT's responsibility.
-- **Daylight.** The SUT requests daily `sunrise`/`sunset` in addition to UV and precipitation hours. It may use their difference to reduce outdoor-sightseeing suitability on short-day forecasts; fixtures default to a deterministic 12-hour window (06:00–18:00) that also drives the hourly day-part ranges.
+- **Daylight.** The SUT requests daily `sunrise`/`sunset` in addition to UV and precipitation hours. The window defines which hourly samples apply when scoring (see [`ranking-thresholds.md`](test/contracts/activity-ranking-api/ranking-thresholds.md)); using it to *modulate* scores (e.g. shorter days reducing outdoor-sightseeing) remains intentionally unpinned. Fixtures default to a deterministic 12-hour window (06:00–18:00) that also drives the hourly day-part ranges.
 - **Declarative features.** Coordinates and search strings never appear in scenarios; they are held in `weatherLocations.ts` and the step definitions.
 
 ## Omissions & trade-offs
