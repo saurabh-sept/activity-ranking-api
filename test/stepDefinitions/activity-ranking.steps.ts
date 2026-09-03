@@ -150,17 +150,17 @@ Given('a town using canonical week B weather:', function (this: ActivityRankingW
   this.selectedCoordinates = weatherLocations.weekB;
 });
 
-Given('a town where all seven days have wind speed {float} km\\/h, just below the surfing threshold', function (this: ActivityRankingWorld, value: number) {
+Given('a town where all seven days have wind speed {float} km\/h, just below the surfing threshold', function (this: ActivityRankingWorld, value: number) {
   assert.equal(value, 24.9);
   this.selectedCoordinates = weatherLocations.boundaryWindLow;
 });
 
-Given('a town where all seven days have wind speed {float} km\\/h, exactly at the surfing threshold', function (this: ActivityRankingWorld, value: number) {
+Given('a town where all seven days have wind speed {float} km\/h, exactly at the surfing threshold', function (this: ActivityRankingWorld, value: number) {
   assert.equal(value, 25.0);
   this.selectedCoordinates = weatherLocations.boundaryWindExact;
 });
 
-Given('a town where all seven days have wind speed {float} km\\/h, just above the surfing threshold', function (this: ActivityRankingWorld, value: number) {
+Given('a town where all seven days have wind speed {float} km\/h, just above the surfing threshold', function (this: ActivityRankingWorld, value: number) {
   assert.equal(value, 25.1);
   this.selectedCoordinates = weatherLocations.boundaryWindHigh;
 });
@@ -177,17 +177,17 @@ Given('a town where all seven days have temperature 0.1°C, just above freezing,
   this.selectedCoordinates = weatherLocations.boundaryThaw;
 });
 
-Given('a town where all seven days have rainfall {float} mm\\/h, just below the indoor threshold', function (this: ActivityRankingWorld, value: number) {
+Given('a town where all seven days have rainfall {float} mm\/h, just below the indoor threshold', function (this: ActivityRankingWorld, value: number) {
   assert.equal(value, 4.9);
   this.selectedCoordinates = weatherLocations.boundaryRainLow;
 });
 
-Given('a town where all seven days have rainfall {float} mm\\/h, exactly at the indoor threshold', function (this: ActivityRankingWorld, value: number) {
+Given('a town where all seven days have rainfall {float} mm\/h, exactly at the indoor threshold', function (this: ActivityRankingWorld, value: number) {
   assert.equal(value, 5.0);
   this.selectedCoordinates = weatherLocations.boundaryRainExact;
 });
 
-Given('a town where all seven days have rainfall {float} mm\\/h, just above the indoor threshold', function (this: ActivityRankingWorld, value: number) {
+Given('a town where all seven days have rainfall {float} mm\/h, just above the indoor threshold', function (this: ActivityRankingWorld, value: number) {
   assert.equal(value, 5.1);
   this.selectedCoordinates = weatherLocations.boundaryRainHigh;
 });

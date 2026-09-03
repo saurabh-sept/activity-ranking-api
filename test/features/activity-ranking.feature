@@ -5,14 +5,14 @@ Feature: Ranking activities for the week ahead
 
   Background:
     Given a town using canonical week A weather:
-      | day | conditions |
-      | 1 | heavy snow and freezing temperatures |
-      | 2 | clear skies and mild temperatures |
-      | 3 | strong winds with warm, dry weather |
-      | 4 | persistent rain and poor visibility |
-      | 5 | warm, dry and calm weather |
-      | 6 | cold, overcast weather with limited visibility |
-      | 7 | extreme heat and very high UV |
+      | day | conditions                                     |
+      | 1   | heavy snow and freezing temperatures           |
+      | 2   | clear skies and mild temperatures              |
+      | 3   | strong winds with warm, dry weather            |
+      | 4   | persistent rain and poor visibility            |
+      | 5   | warm, dry and calm weather                     |
+      | 6   | cold, overcast weather with limited visibility |
+      | 7   | extreme heat and very high UV                  |
 
   Scenario: I receive a rating for each of the next seven days
     When I ask how suitable each activity is
@@ -63,14 +63,14 @@ Feature: Ranking activities for the week ahead
 
   Scenario: Severe wet and windy weather is unsuitable for surfing and outdoor sightseeing
     Given a town using canonical week B weather:
-      | day | conditions |
-      | 1 | severe rain, poor visibility and dangerous winds |
-      | 2 | cold, dry weather with no snowfall |
-      | 3 | clear skies and mild temperatures |
-      | 4 | strong winds with warm, dry weather |
-      | 5 | persistent rain and poor visibility |
-      | 6 | heavy snow and freezing temperatures |
-      | 7 | warm, dry and calm weather |
+      | day | conditions                                       |
+      | 1   | severe rain, poor visibility and dangerous winds |
+      | 2   | cold, dry weather with no snowfall               |
+      | 3   | clear skies and mild temperatures                |
+      | 4   | strong winds with warm, dry weather              |
+      | 5   | persistent rain and poor visibility              |
+      | 6   | heavy snow and freezing temperatures             |
+      | 7   | warm, dry and calm weather                       |
     When I ask how suitable each activity is
     Then "Surfing" should not be the best-rated activity on day 1
     And "Outdoor Sightseeing" should not be the best-rated activity on day 1
@@ -80,42 +80,42 @@ Feature: Ranking activities for the week ahead
     When I ask how suitable each activity is
     Then I should be told activity ranking is temporarily unavailable
 
-Scenario: Cold but dry conditions should not favour skiing
+  Scenario: Cold but dry conditions should not favour skiing
     Given a town using canonical week B weather:
-      | day | conditions |
-      | 1 | severe rain, poor visibility and dangerous winds |
-      | 2 | cold, dry weather with no snowfall |
-      | 3 | clear skies and mild temperatures |
-      | 4 | strong winds with warm, dry weather |
-      | 5 | persistent rain and poor visibility |
-      | 6 | heavy snow and freezing temperatures |
-      | 7 | warm, dry and calm weather |
+      | day | conditions                                       |
+      | 1   | severe rain, poor visibility and dangerous winds |
+      | 2   | cold, dry weather with no snowfall               |
+      | 3   | clear skies and mild temperatures                |
+      | 4   | strong winds with warm, dry weather              |
+      | 5   | persistent rain and poor visibility              |
+      | 6   | heavy snow and freezing temperatures             |
+      | 7   | warm, dry and calm weather                       |
     When I ask how suitable each activity is
     Then "Skiing" should not be the best-rated activity on day 2
 
-Scenario: Pleasant clear dry weather should not favour indoor sightseeing
+  Scenario: Pleasant clear dry weather should not favour indoor sightseeing
     Given a town using canonical week B weather:
-      | day | conditions |
-      | 1 | severe rain, poor visibility and dangerous winds |
-      | 2 | cold, dry weather with no snowfall |
-      | 3 | clear skies and mild temperatures |
-      | 4 | strong winds with warm, dry weather |
-      | 5 | persistent rain and poor visibility |
-      | 6 | heavy snow and freezing temperatures |
-      | 7 | warm, dry and calm weather |
+      | day | conditions                                       |
+      | 1   | severe rain, poor visibility and dangerous winds |
+      | 2   | cold, dry weather with no snowfall               |
+      | 3   | clear skies and mild temperatures                |
+      | 4   | strong winds with warm, dry weather              |
+      | 5   | persistent rain and poor visibility              |
+      | 6   | heavy snow and freezing temperatures             |
+      | 7   | warm, dry and calm weather                       |
     When I ask how suitable each activity is
     Then "Indoor Sightseeing" should not be the best-rated activity on day 3
 
-Scenario: A full week with changing weather conditions
+  Scenario: A full week with changing weather conditions
     Given a town using canonical week B weather:
-      | day | conditions |
-      | 1 | severe rain, poor visibility and dangerous winds |
-      | 2 | cold, dry weather with no snowfall |
-      | 3 | clear skies and mild temperatures |
-      | 4 | strong winds with warm, dry weather |
-      | 5 | persistent rain and poor visibility |
-      | 6 | heavy snow and freezing temperatures |
-      | 7 | warm, dry and calm weather |
+      | day | conditions                                       |
+      | 1   | severe rain, poor visibility and dangerous winds |
+      | 2   | cold, dry weather with no snowfall               |
+      | 3   | clear skies and mild temperatures                |
+      | 4   | strong winds with warm, dry weather              |
+      | 5   | persistent rain and poor visibility              |
+      | 6   | heavy snow and freezing temperatures             |
+      | 7   | warm, dry and calm weather                       |
     When I ask how suitable each activity is
     Then day 1 should be best suited to "Indoor Sightseeing"
     And day 2 should be best suited to "Indoor Sightseeing"
