@@ -4,17 +4,17 @@ Feature: Boundary conditions for activity ranking
   So that small changes in forecast values do not change behaviour unexpectedly
 
   Scenario: Wind just below the surfing threshold does not make surfing best
-    Given a town where all seven days have wind speed 24.9 km/h, just below the surfing threshold
+    Given a town where all seven days have wind speed 24.9 kmph, just below the surfing threshold
     When I ask how suitable each activity is
     Then "Surfing" should not be the best-rated activity
 
   Scenario: Wind exactly at the surfing threshold makes surfing best
-    Given a town where all seven days have wind speed 25.0 km/h, exactly at the surfing threshold
+    Given a town where all seven days have wind speed 25.0 kmph, exactly at the surfing threshold
     When I ask how suitable each activity is
     Then "Surfing" should be the best-rated activity
 
   Scenario: Wind just above the surfing threshold makes surfing best
-    Given a town where all seven days have wind speed 25.1 km/h, just above the surfing threshold
+    Given a town where all seven days have wind speed 25.1 kmph, just above the surfing threshold
     When I ask how suitable each activity is
     Then "Surfing" should be the best-rated activity
 
@@ -34,17 +34,17 @@ Feature: Boundary conditions for activity ranking
     Then "Skiing" should not be the best-rated activity
 
   Scenario: Rain just below the indoor threshold does not make indoor sightseeing best
-    Given a town where all seven days have rainfall 4.9 mm/h, just below the indoor threshold
+    Given a town where all seven days have rainfall 4.9 mmph, just below the indoor threshold
     When I ask how suitable each activity is
     Then "Indoor Sightseeing" should not be the best-rated activity
 
   Scenario: Rain exactly at the indoor threshold makes indoor sightseeing best
-    Given a town where all seven days have rainfall 5.0 mm/h, exactly at the indoor threshold
+    Given a town where all seven days have rainfall 5.0 mmph, exactly at the indoor threshold
     When I ask how suitable each activity is
     Then "Indoor Sightseeing" should be the best-rated activity
 
   Scenario: Rain just above the indoor threshold makes indoor sightseeing best
-    Given a town where all seven days have rainfall 5.1 mm/h, just above the indoor threshold
+    Given a town where all seven days have rainfall 5.1 mmph, just above the indoor threshold
     When I ask how suitable each activity is
     Then "Indoor Sightseeing" should be the best-rated activity
 
