@@ -150,7 +150,7 @@ Given('a town using canonical week B weather:', function (this: ActivityRankingW
   this.selectedCoordinates = weatherLocations.weekB;
 });
 
-Given('a town where all seven days have wind speed {speed} kmph, just below the surfing threshold', function (this: ActivityRankingWorld, value: number) {
+Given('a town where all seven days have wind speed {float} kmph, just below the surfing threshold', function (this: ActivityRankingWorld, value: number) {
   assert.equal(value, 24.9);
   this.selectedCoordinates = weatherLocations.boundaryWindLow;
 });
