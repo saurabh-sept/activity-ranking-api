@@ -118,7 +118,7 @@ The **suitability measure** is a `rank` (1–4, best to worst), a `score` (0–1
 
 ### How the tests consume the contract
 
-The two `contracts/activity-ranking-api/*.response.json` files are **golden shapes**. Step definitions load them and call `assertMatchesContract(actualResponse, golden)`, which checks **keys and leaf types only** (values are never compared, since live weather varies). The contract sample defines the fields checked by the shape validator; behavioral assumptions are enforced by the scenarios. The behavioural half of the contract — score/rating bands, `rank` 1–4 semantics, per-activity thresholds, the Open-Meteo payload assumption and the sunrise/sunset → hourly-window relation — is specified in [`ranking-thresholds.md`](test/contracts/activity-ranking-api/ranking-thresholds.md).
+- The two `contracts/activity-ranking-api/*.response.json` files are **golden shapes**. Step definitions load them and call `assertMatchesContract(actualResponse, golden)`, which checks **keys and leaf types only** (values are never compared, since live weather varies). The contract sample defines the fields checked by the shape validator; behavioral assumptions are enforced by the scenarios. The behavioural half of the contract — score/rating bands, `rank` 1–4 semantics, per-activity thresholds, the Open-Meteo payload assumption and the sunrise/sunset → hourly-window relation — is specified in [`ranking-thresholds.md`](test/contracts/activity-ranking-api/ranking-thresholds.md).
 ---
 
 ## Open-Meteo dependency & mocking strategy
@@ -149,6 +149,48 @@ hourly=temperature_2m,rain,showers,snowfall,wind_speed_10m,visibility,cloud_cove
 ```
 
 Each compact fixture profile stores three day-part values (morning/afternoon/evening); the mock expands them into all 24 hourly samples for all seven days, so returned hourly arrays have 168 values. Responses include real Open-Meteo metadata (`generationtime_ms`, `utc_offset_seconds`, `timezone_abbreviation`, `elevation`); `daily.precipitation_hours` is **derived** from the expanded hourly `rain`/`showers`/`snowfall` arrays (count of rainy hours per day), so reported durations are always consistent with the hourly data. Day-parts and `daily.sunrise`/`sunset` are derived from a per-profile daylight window (default `06:00`–`18:00`): morning runs `[sunrise, 12)`, afternoon `[12, sunset)`, and the remaining hours carry the evening/night value — so a future short-day scenario only changes the window and the hourly ranges follow.
+
+### Fixture authoring reference
+
+The compact fixture format is defined by the `ForecastProfile` interface in `test/mocks/openMeteo/forecastFixture.ts`. The `toOpenMeteoForecast()` function expands it into the full Open-Meteo response at runtime.
+
+**Fixture structure:**
+
+```typescript
+interface ForecastProfile {
+  latitude: number;
+  longitude: number;
+  timezone: string;
+  elevation?: number;                    // metres, defaults to 0
+  daylight?: { sunriseHour: number; sunsetHour: number };  // whole hours, 0 ≤ sunrise < sunset ≤ 23
+  hourly: {
+    temperature_2m: [number, number, number];   // [morning, afternoon, evening/night]
+    rain: [number, number, number];
+    showers: [number, number, number];
+    snowfall: [number, number, number];
+    wind_speed_10m: [number, number, number];
+    visibility: [number, number, number];
+    cloud_cover: [number, number, number];
+  };
+  daily: {
+    uv_index_max: number[];              // 7 values, one per day
+  };
+  weeklyHourly?: {                       // optional: per-day variation (7 triples per field)
+    temperature_2m: [number, number, number][];
+    rain: [number, number, number][];
+    // ... same 7 fields as hourly
+  };
+}
+```
+
+**Key details:**
+- `hourly` stores 3 day-part values: morning `[sunrise, 12)`, afternoon `[12, sunset)`, evening/night for remaining hours
+- `weeklyHourly` (optional) provides 7 triples for per-day variation — used by week-a/week-b; boundary files omit it and the expansion cycles the 3 base values
+- `daylight` defaults to `{ sunriseHour: 6, sunsetHour: 18 }` (12-hour day); validated by `isValidDaylight()`
+- `daily.uv_index_max` requires exactly 7 values
+- The base timestamp (`FORECAST_START`) is `1_787_875_200` (a fixed reference date)
+- `hourly_units` and `daily_units` are generated automatically by the expansion
+
 
 ### Weather coverage design
 
